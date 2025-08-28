@@ -1,0 +1,27 @@
+{
+  "name": "lark-embed-app",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "npm run build:server",
+    "build:server": "tsc --build tsconfig.json",
+    "dev": "tsx watch src/server/server.ts",
+    "start": "node dist/server/server.js"
+  },
+  "dependencies": {
+    "@larksuiteoapi/node-sdk": "^1.6.0",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "express-session": "^1.17.3",
+    "jsonwebtoken": "^9.0.2"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.21",
+    "@types/express-session": "^1.18.0",
+    "@types/jsonwebtoken": "^9.0.7",
+    "@types/node": "^22.8.7",
+    "tsx": "^4.19.2",
+    "typescript": "^5.6.3"
+  }
+}

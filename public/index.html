@@ -1,0 +1,45 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Holistics</title>
+  <meta name="referrer" content="no-referrer">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="/index.css">
+  <script
+    type = "text/javascript"
+    src= "https://sf16-scmcdn.larksuitecdn.com/obj/lark-static-sg/lark/op/h5-js-sdk-1.5.38.js"
+  ></script>
+</head>
+<body>
+  <div class="wrap">
+    <div class="row card" id="user-info">
+      <div class="user-field">
+        <div class="user-label">Name</div>
+        <div class="user-value" id="name">—</div>
+      </div>
+      <div class="user-field">
+        <div class="user-label">Email</div>
+        <div class="user-value" id="email">—</div>
+      </div>
+      <div class="actions" style="margin-left:auto">
+        <button id="open-dashboard-btn" disabled>Open Dashboard</button>
+      </div>
+    </div>
+
+    <div id="status-container" class="card status-container">
+      <div class="status-content">
+        <span id="status"></span>
+      </div>
+    </div>
+
+    <iframe
+      id="embedded-iframe"
+      allowfullscreen>
+    </iframe>
+  </div>
+
+   <!-- Plain JavaScript client -->
+   <script src="script.js"></script>
+</body>
+</html>
