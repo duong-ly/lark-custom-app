@@ -230,7 +230,34 @@ npm run build:server
 
 ## Deployment
 
-### Production Build
+### Docker Deployment (Recommended)
+
+#### Quick Start
+```bash
+# 1. Ensure you have Docker and Docker Compose installed
+# 2. Create your .env file with configuration
+# 3. Deploy with one command:
+./docker-deploy.sh
+```
+
+#### Manual Docker Commands
+```bash
+# Build and start production
+docker-compose up -d --build
+
+# View logs
+docker-compose logs -f
+
+# Stop services
+docker-compose down
+
+# Development mode (with hot reload)
+docker-compose --profile dev up -d --build
+```
+
+### Traditional Deployment
+
+#### Production Build
 ```bash
 npm run build
 NODE_ENV=production npm start
@@ -263,6 +290,28 @@ NODE_ENV=production npm start
 2. **Service Architecture**: Maintain clean separation between Lark and embed services
 3. **Type Coverage**: Ensure comprehensive type definitions
 4. **Production Focus**: Keep code clean and optimized for production use
+
+## License
+
+## Docker Configuration
+
+### Dockerfile Features
+- **Multi-stage build** for optimized production images
+- **Security-focused** with non-root user
+- **Health checks** for container monitoring
+- **Alpine Linux** for minimal image size
+
+### Docker Compose Services
+- **Production**: `lark-embed-app` on port 3001
+- **Development**: `lark-embed-dev` on port 3002 (optional)
+- **Networking**: Isolated bridge network
+- **Volumes**: Optional logs mounting
+
+### Environment Variables
+All environment variables from `.env` are automatically passed to containers:
+- Lark/Feishu credentials
+- Holistics embed configuration
+- Server settings
 
 ## License
 

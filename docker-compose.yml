@@ -1,0 +1,75 @@
+version: '3.8'
+
+services:
+  lark-embed-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: production
+    ports:
+      - "3001:3001"
+    environment:
+      - NODE_ENV=production
+      - PORT=3001
+      # Lark/Feishu Configuration
+      - LARK_APP_ID=${LARK_APP_ID}
+      - LARK_APP_SECRET=${LARK_APP_SECRET}
+      # Holistics Embed Configuration
+      - EMBED_SECRET=${EMBED_SECRET}
+      - EMBED_BASE=${EMBED_BASE}
+      - EMBED_HASHCODE=${EMBED_HASHCODE}
+      # Server Configuration
+      - SESSION_SECRET=${SESSION_SECRET}
+    env_file:
+      - .env
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "node", "-e", "require('http').get('http://localhost:3001/health', (res) => { process.exit(res.statusCode === 200 ? 0 : 1) })"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    volumes:
+      # Optional: Mount logs directory for production logging
+      - ./logs:/app/logs
+    networks:
+      - lark-embed-network
+
+  # Development service (optional)
+  lark-embed-dev:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: builder
+    ports:
+      - "3002:3001"
+    environment:
+      - NODE_ENV=development
+      - PORT=3001
+      # Lark/Feishu Configuration
+      - LARK_APP_ID=${LARK_APP_ID}
+      - LARK_APP_SECRET=${LARK_APP_SECRET}
+      # Holistics Embed Configuration
+      - EMBED_SECRET=${EMBED_SECRET}
+      - EMBED_BASE=${EMBED_BASE}
+      - EMBED_HASHCODE=${EMBED_HASHCODE}
+      # Server Configuration
+      - SESSION_SECRET=${SESSION_SECRET}
+    env_file:
+      - .env
+    volumes:
+      # Mount source code for development
+      - .:/app
+      - /app/node_modules
+    command: npm run dev
+    profiles:
+      - dev
+    networks:
+      - lark-embed-network
+
+networks:
+  lark-embed-network:
+    driver: bridge
+
+volumes:
+  logs:
